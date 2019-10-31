@@ -19,32 +19,72 @@
             <h3 class= "text-white text-center">Search for a City</h3>
             <form>
                 <div class="active-pink-4 mb-4">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    <input class="form-control" id="add-city" type="text" placeholder="Search" aria-label="Search">
                 </div>
             </form>
         </div>
         <div class= "col-md-8">
             <div class= "card"></div>
+            <div class="city">
+                <div class="icon"></div>    
+            </div>
+            <div class="temp"></div>
+            <div class="humidity"></div>
+            <div class="wind"></div>
         </div>
         </div>
     </div> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  
     <script>
-    var APIKey = "&appid=90d8034ab1c31b7a840b6240a778e802"; 
-    var city = '';
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?" + city + APIKey;
-    
+            var cities = '';
+   
+            var city = $(this).attr("data-name");
+            var APIKey = "&appid=90d8034ab1c31b7a840b6240a778e802"; 
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
+
+        function searchCities (city) {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response) {
+           console.log(response);
+        });
+        }
+        function displayCities(){
+            for (var i = 0; i < cities.length; i++){
+                console.log(cities[i]);
+                return(cities);
+
+            }
+        };
         $.ajax({
             url: queryURL,
             method: "GET",
-        }).then(function(response){
-           
+         }).then(function(response){ 
             console.log(queryURL);
-            
             console.log(response);
-        })
 
+            $("#card").text(JSON.stringify(response));    
+
+            $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+            $(".icon").text(response.weather.icon);
+            $(".temp").text("Temperature (F) " + response.main.temp);
+            $(".humidity").text("Humidity: " + response.main.humidity);
+            $(".wind").text("Wind Speed: " + response.wind.speed);
+
+            var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+            $(".tempF").text("Temperature (Kelvin) " + tempF);
+
+        });
+
+        $("#form-control").on("click", function(event) {
+            var city = $("#add-city").val()
+
+            cities.push(city);
+            
+        });
     
     </script>
 
