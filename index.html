@@ -1,97 +1,115 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
     <title>Weather Dashboard</title>
-  </head>
+</head>
 
-  <body>
-    <h1 class= "bg-dark text-white m-2 p-2 text-center">Weather Dashboard</h1>
-    <div class= "container">
-        <div class= "row">
-        <div class = "col-md-4">
-            <h3 class= "text-white text-center">Search for a City</h3>
-            <form>
-                <div class="active-pink-4 mb-4">
-                    <input class="form-control" id="add-city" type="text" placeholder="Search" aria-label="Search">
-                </div>
-            </form>
-        </div>
-        <div class= "col-md-8">
-            <div class= "card"></div>
-            <div class="city">
-                <div class="icon"></div>    
+<body>
+    <h1 class="bg-dark text-white m-2 p-2 text-center">Weather Dashboard</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="text-white text-center">Search for a City</h3>
+                <form>
+                    <div class="active-pink-4 mb-4">
+                        <input class="form-control" id="add-city" type="text" placeholder="Search"
+                            aria-label="Search"><button id="sub">submit</button>
+                    </div>
+                </form>
             </div>
-            <div class="temp"></div>
-            <div class="humidity"></div>
-            <div class="wind"></div>
+            <div class="col-md-8">
+                <div id="card"></div>
+                <div class="city">
+                    <div class="icon"></div>
+                </div>
+                <div class="temp"></div>
+                <div class="humidity"></div>
+                <div class="wind"></div>
+            </div>
         </div>
-        </div>
-    </div> 
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- 
-    <script>
-            var cities = '';
-   
-            var city = $(this).attr("data-name");
-            var APIKey = "&appid=90d8034ab1c31b7a840b6240a778e802"; 
-            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
 
-        function searchCities (city) {
-            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKey;
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function(response) {
-           console.log(response);
-        });
-        }
-        function displayCities(){
-            for (var i = 0; i < cities.length; i++){
-                console.log(cities[i]);
-                return(cities);
-
-            }
-        };
-        $.ajax({
-            url: queryURL,
-            method: "GET",
-         }).then(function(response){ 
-            console.log(queryURL);
-            console.log(response);
-
-            $("#card").text(JSON.stringify(response));    
-
-            $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-            $(".icon").text(response.weather.icon);
-            $(".temp").text("Temperature (F) " + response.main.temp);
-            $(".humidity").text("Humidity: " + response.main.humidity);
-            $(".wind").text("Wind Speed: " + response.wind.speed);
-
-            var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-            $(".tempF").text("Temperature (Kelvin) " + tempF);
-
-        });
-
-        $("#form-control").on("click", function(event) {
-            var city = $("#add-city").val()
-
-            cities.push(city);
-            
-        });
-    
-    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        let cities = '';
+
+        //var city = $(this).attr("data-name");
+        var APIKey = "&appid=90d8034ab1c31b7a840b6240a778e802";
+        $('#sub').click((event) => {
+            event.preventDefault()
+            searchCities($('#add-city').val())
+        })
+        function searchCities(city) {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=" + city + APIKey;
+            // $.ajax({
+            //     url: queryURL,
+            //     method: "GET"
+            // }).then(function (response) {
+            //     console.log(response);
+            // });
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+            }).then(function (response) {
+                console.log(queryURL);
+                console.log(response);
+
+
+                let div = $('<div class="card">')
+                var city = $("<h1>").addClass("card-title").text(response.name + " (" + new Date().toLocaleDateString() + ")");
+                city.append($("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png"));
+                var temp = $('<div>').text("Temperature (F) " + response.main.temp);
+                var humid = $('<div>').text("Humidity: " + response.main.humidity);
+                var  wind =$('<div>').text("Wind Speed: " + response.wind.speed);
+                div.append(city, temp, humid, wind)
+                $("#card").append(div);
+                // $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+                // $(".icon").text(response.weather.icon);
+                // $(".temp").text("Temperature (F) " + response.main.temp);
+                // $(".humidity").text("Humidity: " + response.main.humidity);
+                // $(".wind").text("Wind Speed: " + response.wind.speed);
+
+                // var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+                // $(".tempF").a("Temperature (Kelvin) " + tempF);
+
+            });
+        }
+        function displayCities() {
+            for (var i = 0; i < cities.length; i++) {
+                console.log(cities[i]);
+                return (cities);
+
+            }
+        };
+
+        $("#form-control").on("click", function (event) {
+            var city = $("#add-city").val()
+
+            cities.push(city);
+
+        });
+
+    </script>
+</body>
+
 </html>
